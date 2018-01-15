@@ -39,5 +39,18 @@ namespace Uber.SDK
                 Data = response.IsSuccessStatusCode
             };
         }
+
+		public async Task<UberResponse<string>> DeliveryStatusAsync(string deliveryId, StatusEnum status)
+		{
+			string url = "/v1/sandbox/deliveries/" + deliveryId;
+
+			var postData = new Dictionary<string, string>
+			{
+				{ "status" , status.GetDescription()}
+			};
+
+			var content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
+			return await PutAsync<string>(url, content);
+		}
     }
 }

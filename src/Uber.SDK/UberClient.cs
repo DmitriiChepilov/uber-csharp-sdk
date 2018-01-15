@@ -411,5 +411,27 @@ namespace Uber.SDK
 
             return uberResponse;
         }
+
+		protected async Task<UberResponse<T>> PutAsync<T>(string url, HttpContent content)
+		{
+			var uberResponse = new UberResponse<T>();
+
+			var response = await _httpClient
+				.PutAsync(url, content)
+				.ConfigureAwait(false);
+
+			var responseContent = await response.Content.ReadAsStringAsync();
+
+			if (response.IsSuccessStatusCode)
+			{
+				uberResponse.Data = JsonConvert.DeserializeObject<T>(responseContent);
+			}
+			else
+			{
+				uberResponse.Error = JsonConvert.DeserializeObject<UberError>(responseContent);
+			}
+
+			return uberResponse;
+		}
     }
 }
