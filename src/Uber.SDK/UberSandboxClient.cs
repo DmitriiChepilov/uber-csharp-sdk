@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Uber.SDK.Extensions;
 using Uber.SDK.Models;
 
 namespace Uber.SDK
@@ -19,14 +21,11 @@ namespace Uber.SDK
         /// <param name="requestId"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public async Task<UberResponse<bool>> UpdateRequestStatus(string requestId, string status = null)
+        public async Task<UberResponse<bool>> UpdateRequestStatus(string requestId, StatusEnum status)
         {
             var formData = new Dictionary<string, string>();
 
-            if (!string.IsNullOrWhiteSpace(status))
-            {
-                formData.Add("status", status);
-            }
+            formData.Add("status", status.GetDescription());
 
             var x = new StringContent(JsonConvert.SerializeObject(formData));
 
