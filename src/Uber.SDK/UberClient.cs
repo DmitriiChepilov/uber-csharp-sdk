@@ -294,6 +294,22 @@ namespace Uber.SDK
 		    return await GetAsync<DeliveriesResponse>(url + query);
 		}
 
+		public async Task<UberResponse<Delivery>> PostDeliveryAsync(string productId, IList<Item> items, DeliveryAction pickup,
+		    DeliveryAction dropoff)
+	    {
+		    const string url = "/v1/deliveries";
+
+		    Delivery postData = new Delivery
+		    {
+			    Items = items,
+			    Pickup = pickup,
+			    Dropoff = dropoff,
+		    };
+
+		    var content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
+		    return await PostAsync<Delivery>(url, content);
+	    }
+
         /// <summary>
         /// Makes a GET request.
         /// </summary>
