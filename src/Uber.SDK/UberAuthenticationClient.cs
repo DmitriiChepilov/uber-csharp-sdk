@@ -96,6 +96,19 @@ namespace Uber.SDK
             return await AuthorizeAsync(data);
         }
 
+		public async Task<AccessToken> GetDelivetyTokenAsync()
+		{
+			var data = new Dictionary<string, string>
+			{
+				{ "client_id", _clientId },
+				{ "client_secret", _clientSecret },
+				{ "grant_type", "client_credentials" },
+				{ "scope", "delivery" }
+			};
+
+			return await AuthorizeAsync(data);
+		}
+
         /// <summary>
         /// Exchange this authorization code for an AccessToken, allowing requests to be mande on behalf of a user.
         /// </summary>
