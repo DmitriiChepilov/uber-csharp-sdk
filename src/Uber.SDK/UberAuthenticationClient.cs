@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using Newtonsoft.Json;
 using Uber.SDK.Interfaces;
 using Uber.SDK.Models;
@@ -64,7 +64,7 @@ namespace Uber.SDK
 
             if (!string.IsNullOrWhiteSpace(redirectUri))
             {
-                authorizeUrl += string.Concat("&redirect_uri=", HttpUtility.UrlEncode(redirectUri));
+                authorizeUrl += string.Concat("&redirect_uri=", WebUtility.UrlEncode(redirectUri));
             }
 
             return authorizeUrl;
