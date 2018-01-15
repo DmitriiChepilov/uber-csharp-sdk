@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Uber.SDK.Models.Helpers;
 
 namespace Uber.SDK.Models
 {
@@ -14,7 +15,8 @@ namespace Uber.SDK.Models
         public string ProductId { get; set; }
 
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+		[JsonConverter(typeof(StatusEnumConverter))]
+        public StatusEnum Status { get; set; }
 
         [JsonProperty(PropertyName = "distance")]
         public double Distance { get; set; }

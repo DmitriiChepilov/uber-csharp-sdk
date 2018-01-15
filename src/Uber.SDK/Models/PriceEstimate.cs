@@ -7,7 +7,7 @@ namespace Uber.SDK.Models
         [JsonProperty(PropertyName = "product_id")]
         public string ProductId { get; set; }
 
-        [JsonProperty(PropertyName = "CurrencyCode")]
+        [JsonProperty(PropertyName = "currency_code")]
         public string CurrencyCode { get; set; }
 
         [JsonProperty(PropertyName = "display_name")]
@@ -17,10 +17,10 @@ namespace Uber.SDK.Models
         public string Estimate { get; set; }
 
         [JsonProperty(PropertyName = "low_estimate")]
-        public int? LowEstimate { get; set; }
+        public float? LowEstimate { get; set; }
 
         [JsonProperty(PropertyName = "high_estimate")]
-        public int? HighEstimate { get; set; }
+        public float? HighEstimate { get; set; }
 
         [JsonProperty(PropertyName = "surge_multiplier")]
         public float SurgeMultiplier { get; set; }
@@ -30,5 +30,8 @@ namespace Uber.SDK.Models
 
         [JsonProperty(PropertyName = "distance")]
         public double Distance { get; set; }
+
+        [JsonProperty(PropertyName = "localized_display_name")]
+        public string LocalizedDisplayName { get; set; }
     }
 }
