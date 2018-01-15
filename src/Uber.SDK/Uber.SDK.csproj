@@ -56,10 +56,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Interfaces\IUberAuthenticationClient.cs" />
     <Compile Include="Interfaces\IUberClient.cs" />
     <Compile Include="Models\AccessToken.cs" />
     <Compile Include="Models\AccessTokenType.cs" />
+    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\Courier.cs" />
+    <Compile Include="Models\CourierLocation.cs" />
+    <Compile Include="Models\CourierNotes.cs" />
+    <Compile Include="Models\DeliveriesResponse.cs" />
+    <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\DeliveryAction.cs" />
+    <Compile Include="Models\Helpers\StatusEnumConverter.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\PriceEstimate.cs" />
     <Compile Include="Models\PriceEstimateCollection.cs" />
     <Compile Include="Models\Product.cs" />
@@ -70,6 +82,8 @@
     <Compile Include="Models\RequestDetailsLocation.cs" />
     <Compile Include="Models\RequestDetailsVehicle.cs" />
     <Compile Include="Models\RequestMap.cs" />
+    <Compile Include="Models\SignatureImage.cs" />
+    <Compile Include="Models\StatusEnum.cs" />
     <Compile Include="Models\TimeEstimate.cs" />
     <Compile Include="Models\TimeEstimateCollection.cs" />
     <Compile Include="Models\UberError.cs" />

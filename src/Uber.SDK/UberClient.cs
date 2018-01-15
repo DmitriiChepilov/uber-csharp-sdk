@@ -4,7 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
+using Uber.SDK.Extensions;
 using Uber.SDK.Interfaces;
 using Uber.SDK.Models;
 
@@ -266,6 +268,31 @@ namespace Uber.SDK
 
             return await DeleteAsync(url);
         }
+
+		/// <summary>
+	    /// Get a list of all deliveries
+	    /// </summary>
+	    /// <param name="status">A status value to filter for. Additionally supports a value of active that will return all ongoing deliveries. A delivery is considered active if the status field value is either en_route_to_pickup, at_pickup, en_route_to_dropoff or at_dropoff</param>
+	    /// <param name="offset">Offset the list of returned results by this amount. Default is zero</param>
+	    /// <param name="limit">Number of items to retrieve. Default is 10, maximum is 50</param>
+	    /// <returns></returns>
+	    public async Task<UberResponse<DeliveriesResponse>> GetDeliveriesAsync(StatusEnum status, int offset = 0, int limit = 10)
+	    {
+		    var url = "/v1/deliveries?";
+
+		    if (limit > 50)
+			    limit = 50;
+
+		    var query = HttpUtility.ParseQueryString(string.Empty);
+
+		    if (offset > 0)
+			    query["offset"] = offset.ToString();
+		    if (limit > 0)
+			    query["limit"] = limit.ToString();
+		    query["status"] = status.GetDescription();
+			
+		    return await GetAsync<DeliveriesResponse>(url + query);
+		}
 
         /// <summary>
         /// Makes a GET request.
