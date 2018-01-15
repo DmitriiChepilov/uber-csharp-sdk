@@ -135,3 +135,71 @@ var request = await uberClient.GetRequestMapAsync(requestId);
 var uberClient = new UberClient(AccessTokenType.Client, clientToken);
 var cancel = await uberClient.CancelRequestAsync(requestId);
 ```
+### Webhook Example
+[Uber Docs](https://developer.uber.com/docs/riders/guides/webhooks)
+```
+using System;
+using System.Configuration;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using Newtonsoft.Json;
+using Uber.SDK.Helpers;
+using Uber.SDK.Models;
+using WebHooks.Extensions;
+
+namespace WebHooks.Controllers
+{
+	public class HookController : ApiController
+	{
+		[HttpPost]
+		public async Task<HttpResponseMessage> Uber()
+		{
+			try
+			{
+				string json = await Request.Content.ReadAsStringAsync();
+
+				#region Webhook verification
+
+				string signature = Request.GetHeaderValue("X-Uber-Signature");
+				if (string.IsNullOrEmpty(signature))
+					return Request.CreateResponse(HttpStatusCode.Forbidden);
+
+				string clientSecret = ConfigurationManager.AppSettings["UBER.ClientSecret"];
+
+				if (!UberSignature.IsSendedByUber(clientSecret, json, signature))
+					return Request.CreateResponse(HttpStatusCode.Forbidden);
+
+				#endregion Webhook verification
+
+				var uberWebHookData = await JsonDeserialize<WebHook>(json);
+				
+
+			}
+			catch (Exception e)
+			{
+				// log exception
+				return Request.CreateResponse(HttpStatusCode.OK);
+			}
+			return Request.CreateResponse(HttpStatusCode.OK);
+		}
+
+		[HttpGet]
+		public string Test()
+		{
+			return $"Test. {DateTime.Now}. MachineName: {Environment.MachineName}. {Environment.CurrentDirectory}: {Environment.NewLine}";
+		}
+
+		#region Helper method
+
+		private Task<T> JsonDeserialize<T>(string jsonString)
+		{
+			Task<T> ser = Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(jsonString));
+			return ser;
+		}
+
+		#endregion Helper method
+	}
+}
+```
