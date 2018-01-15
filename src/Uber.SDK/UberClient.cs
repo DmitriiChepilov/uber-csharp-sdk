@@ -70,7 +70,7 @@ namespace Uber.SDK
         public async Task<UberResponse<PriceEstimateCollection>> GetPriceEstimateAsync(float startLatitude, float startLongitude, float endLatitude, float endLongitude)
         {
             var url = string.Format(
-                "/v1/estimates/price?start_latitude={0}&start_longitude={1}&end_latitude={2}&end_longitude={3}",
+				"/v1.2/estimates/price?start_latitude={0}&start_longitude={1}&end_latitude={2}&end_longitude={3}",
                 startLatitude, startLongitude, endLatitude, endLongitude);
 
             return await GetAsync<PriceEstimateCollection>(url);
@@ -97,7 +97,7 @@ namespace Uber.SDK
         public async Task<UberResponse<TimeEstimateCollection>> GetTimeEstimateAsync(float startLatitude, float startLongitude, string customerId = null, string productId = null)
         {
             var url = string.Format(
-                "/v1/estimates/time?start_latitude={0}&start_longitude={1}",
+				"/v1.2/estimates/time?start_latitude={0}&start_longitude={1}",
                 startLatitude, startLongitude);
 
             if (!string.IsNullOrWhiteSpace(customerId))
